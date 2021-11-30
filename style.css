@@ -12,6 +12,14 @@ body {
     background: #f0f2f5;
     font-family: 'Poppins', sans-serif;
 }
+.sr-only{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+}
 
 h2 {
     margin-top: 3.2rem;
