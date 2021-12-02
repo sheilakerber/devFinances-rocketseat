@@ -12,6 +12,12 @@ body {
     background: #f0f2f5;
     font-family: 'Poppins', sans-serif;
 }
+
+/* tamanho padrão mobile */
+html {
+    font-size: 93.75%;
+}
+
 .sr-only{
     position: absolute;
     width: 1px;
@@ -98,6 +104,13 @@ header {
     color: white;
 }
 
+#transaction {
+    display: block;
+    width: 100%;
+    border-spacing: 0 0.5rem;
+    overflow-x: auto;
+}
+
 #dataTable{
     width: 100%;
     border-spacing: 0 0.5rem;
@@ -149,4 +162,17 @@ footer{
     padding: 4rem 0 2rem;
     color: var(--dark-blue);
     opacity: 0.6;
+}
+
+/*  RESPONSIVE  */
+@media (min-width: 800px) {
+    html {
+        font-size: 87.75%;  /* 14px */
+    }
+
+    #balance {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
 }
