@@ -2,12 +2,10 @@ const Modal = {
     // abrir modal e adicionar classe active
     open(){
         document.querySelector('.modal-overlay').classList.add('active')
-        alert("open")
     },
     // fechar modal e remover classe active
     close(){
         document.querySelector('.modal-overlay').classList.remove('active')
-        alert("close")
     }
 }
 
@@ -42,9 +40,10 @@ const DOM = {
         DOM.transactionsContainer.appendChild(tr)
     },
     innerHtmlTransaction(transaction){
+        const CSSclass = transaction.amount > 0 ? "income" : "expense"
         const html = `
                 <td class="description">${transaction.description}</td>
-                <td class="expense">${transaction.amount}</td>
+                <td class= "${CSSclass}">${transaction.amount}</td>
                 <td class="date">${transaction.date}</td>
                 <td>
                     <img src="./assets/minus.svg" alt="Remover transação">
