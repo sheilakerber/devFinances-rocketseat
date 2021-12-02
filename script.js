@@ -23,12 +23,43 @@ const transactions = [{
         date: '01/01/2021'
     },{
         id: 3,
-        description: 'Itens domésticos',
-        amount: 8000,
+        description: 'Salário',
+        amount: 800000,
         date: '09/01/2021'
     }
 ]
 
+// funcionalidades a partir do obj Transaction
+const Transaction = {
+    // somar entradas
+    incomes() {
+        let income = 0
+        transactions.forEach((transaction) => {
+           if (transaction.amount > 0 )
+           income += transaction.amount
+        })
+
+        return income
+    },
+
+    // somar saídas
+    expenses(){
+        let expense = 0
+        transactions.forEach((transaction) => {
+           if (transaction.amount < 0 )
+           expense += transaction.amount
+        })
+
+        return expense
+
+    },
+
+    // balanço total
+    total(){
+        return Transaction.incomes() + Transaction.expenses()
+
+    }
+}
 
 // funcionalidades úteis diversas
 // obj com funcionalidade para formatar o valor para a moeda brasileira
@@ -70,9 +101,17 @@ const DOM = {
                 </td>
         `
         return html
+    },
+    updateTotal(){
+        document.getElementById('incomeDisplay').innerHTML = Transaction.incomes()
+        document.getElementById('expenseDisplay').innerHTML = Transaction.expenses()
+        document.getElementById('totalDisplay').innerHTML = Transaction.total()
     }
+    
 }
 
 transactions.forEach((transaction) => {
     DOM.addTransaction(transaction)
 })
+
+DOM.updateTotal()
