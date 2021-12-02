@@ -103,9 +103,9 @@ const DOM = {
         return html
     },
     updateTotal(){
-        document.getElementById('incomeDisplay').innerHTML = Transaction.incomes()
-        document.getElementById('expenseDisplay').innerHTML = Transaction.expenses()
-        document.getElementById('totalDisplay').innerHTML = Transaction.total()
+        document.getElementById('incomeDisplay').innerHTML = Utils.formatCurrency(Transaction.incomes())
+        document.getElementById('expenseDisplay').innerHTML = Utils.formatCurrency(Transaction.expenses())
+        document.getElementById('totalDisplay').innerHTML = Utils.formatCurrency(Transaction.total())
     }
     
 }
