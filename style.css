@@ -28,11 +28,26 @@ h2 {
     margin-top: 3.2rem;
     margin-bottom: 0.8rem;
     font-weight: normal;
+    color: var(--dark-blue);
 }
 .container{
   width: min(90vw, 800px);  
   margin: auto;
   color: var(--dark-blue);
+}
+
+a {
+    color: rgb(18, 190, 124);
+    text-decoration: none;
+}
+
+a:hover {
+    color: #3dd705;
+}
+
+.button.new {
+    display: inline-block;
+    margin-bottom: 0.8rem;
 }
 
 header {
@@ -108,7 +123,13 @@ table tbody tr:hover{
 }
 
 table thead tr th:first-child, table tbody tr td:first-child {
-    border-radius: 0.25rem 0 0 0.25rem ;
+    border-radius: 0.25rem 0 0 0.25rem;
+    padding: 1rem 2rem;
+    font-weight: normal;
+}
+
+table thead tr th:last-child, table tbody tr td:last-child {
+    border-radius: 0 0.25rem 0.25rem 0;
     padding: 1rem 2rem;
     font-weight: normal;
 }
