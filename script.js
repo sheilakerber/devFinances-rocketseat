@@ -31,13 +31,15 @@ const transactions = [{
     }
 ]
 
+// obj com as funcionalidades para criação do hmtl de cada nova transação inserida pelo usuário
 const DOM = {
-    addTransaction(transaction, index){
-        console.log(transaction)
-        const tr = document.createElement('tr')
-        tr.innerHTML = this.innerHtmlTransaction(transaction)
+    transactionsContainer: document.querySelector('#dataTable tbody'),
 
-        console.log(tr.innerHTML)
+    addTransaction(transaction, index){
+        const tr = document.createElement('tr')
+        tr.innerHTML = DOM.innerHtmlTransaction(transaction)
+
+        DOM.transactionsContainer.appendChild(tr)
     },
     innerHtmlTransaction(transaction){
         const html = `
@@ -52,4 +54,6 @@ const DOM = {
     }
 }
 
-DOM.addTransaction(transactions[2])
+transactions.forEach((transaction) => {
+    DOM.addTransaction(transaction)
+})
