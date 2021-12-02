@@ -53,7 +53,7 @@
             <h2 class="sr-only" >Transações</h2>
 
 
-            <a href="#" class="button new">+ Nova Transação</a>
+            <a href="#"  onclick="Modal.open()" class="button new">+ Nova Transação</a>
 
 
             <table id="dataTable">
@@ -119,13 +119,15 @@
                     </div>
 
                     <div class="input-group actions">
-                        <a href="#" class="button cancel">Cancelar</a>
+                        <a  onclick="Modal.close()" href="#" class="button cancel">Cancelar</a>
                         <button>Salvar</button>
                     </div>
                </form>
            </div>
         </div>
     </div>
+
+    <script src="./script.js"></script>
 
     <footer>
         <p>dev.finance$</p>
