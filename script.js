@@ -31,10 +31,15 @@ const transactions = [{
 
 // funcionalidades a partir do obj Transaction
 const Transaction = {
+    all: transactions,
+    add(transaction){
+        Transaction.all.push(transaction)
+        App.reload()
+    },
     // somar entradas
     incomes() {
         let income = 0
-        transactions.forEach((transaction) => {
+        Transaction.all.forEach((transaction) => {
            if (transaction.amount > 0 )
            income += transaction.amount
         })
@@ -45,7 +50,7 @@ const Transaction = {
     // somar saídas
     expenses(){
         let expense = 0
-        transactions.forEach((transaction) => {
+        Transaction.all.forEach((transaction) => {
            if (transaction.amount < 0 )
            expense += transaction.amount
         })
@@ -58,22 +63,6 @@ const Transaction = {
     total(){
         return Transaction.incomes() + Transaction.expenses()
 
-    }
-}
-
-// funcionalidades úteis diversas
-// obj com funcionalidade para formatar o valor para a moeda brasileira
-const Utils = {
-    formatCurrency(value){
-        const signal = Number(value) < 0 ? "-" : "" 
-
-        value = String(value).replace(/\D/g, "")
-        value = Number(value) / 100
-        value = value.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-        })
-        return signal + value
     }
 }
 
@@ -106,12 +95,47 @@ const DOM = {
         document.getElementById('incomeDisplay').innerHTML = Utils.formatCurrency(Transaction.incomes())
         document.getElementById('expenseDisplay').innerHTML = Utils.formatCurrency(Transaction.expenses())
         document.getElementById('totalDisplay').innerHTML = Utils.formatCurrency(Transaction.total())
+    },
+    clearTransactions(){
+        DOM.transactionsContainer.innerHTML = ""
     }
-    
 }
 
-transactions.forEach((transaction) => {
-    DOM.addTransaction(transaction)
-})
+// funcionalidades úteis diversas
+// obj com funcionalidade para formatar o valor para a moeda brasileira
+const Utils = {
+    formatCurrency(value){
+        const signal = Number(value) < 0 ? "-" : "" 
 
-DOM.updateTotal()
+        value = String(value).replace(/\D/g, "")
+        value = Number(value) / 100
+        value = value.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        })
+        return signal + value
+    }
+}
+
+const App = {
+    init() {
+        Transaction.all.forEach((transaction) => {
+            DOM.addTransaction(transaction)
+        })
+        
+        DOM.updateTotal()
+    },
+    reload(){
+        DOM.clearTransactions()
+        App.init()
+    },
+}
+
+App.init()
+
+Transaction.add({
+    id: 7,
+    description: 'combustivel',
+    amount: 5000,
+    date: '20/10/2021'
+})
