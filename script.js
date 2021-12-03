@@ -11,18 +11,15 @@ const Modal = {
 
 // array para guardar as transactions
 const transactions = [{
-        id: 1,
         description: 'Luz',
         amount: -15000,
         date: '01/01/2021'
     },
     {
-        id: 2,
         description: 'Aluguel',
         amount: -120000,
         date: '01/01/2021'
     },{
-        id: 3,
         description: 'Salário',
         amount: 800000,
         date: '09/01/2021'
@@ -34,6 +31,10 @@ const Transaction = {
     all: transactions,
     add(transaction){
         Transaction.all.push(transaction)
+        App.reload()
+    },
+    remove(index){
+        Transaction.all.splice(index, 1)
         App.reload()
     },
     // somar entradas
@@ -134,7 +135,6 @@ const App = {
 App.init()
 
 Transaction.add({
-    id: 7,
     description: 'combustivel',
     amount: 5000,
     date: '20/10/2021'
