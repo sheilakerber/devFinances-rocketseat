@@ -9,26 +9,24 @@ const Modal = {
     }
 }
 
-// array para guardar as transactions
-const transactions = [{
-        description: 'Luz',
-        amount: -15000,
-        date: '01/01/2021'
-    },
-    {
-        description: 'Aluguel',
-        amount: -120000,
-        date: '01/01/2021'
-    },{
-        description: 'Salário',
-        amount: 800000,
-        date: '09/01/2021'
-    }
-]
-
 // funcionalidades a partir do obj Transaction
 const Transaction = {
-    all: transactions,
+    // array para guardar as transactions
+    all: [{
+            description: 'Luz',
+            amount: -15000,
+            date: '01/01/2021'
+        },
+        {
+            description: 'Aluguel',
+            amount: -120000,
+            date: '01/01/2021'
+        },{
+            description: 'Salário',
+            amount: 800000,
+            date: '09/01/2021'
+        }
+    ],
     add(transaction){
         Transaction.all.push(transaction)
         App.reload()
@@ -73,7 +71,7 @@ const DOM = {
 
     addTransaction(transaction, index){
         const tr = document.createElement('tr')
-        tr.innerHTML = DOM.innerHtmlTransaction(transaction)
+        tr.innerHTML = DOM.innerHtmlTransaction(transaction, index)
 
         DOM.transactionsContainer.appendChild(tr)
     },
@@ -115,6 +113,77 @@ const Utils = {
             currency: "BRL"
         })
         return signal + value
+    }, 
+    formatValues(value){
+        value = Number(value) * 100  // para garantir que fique no padrao necessario para a formatacao do currency
+        return value 
+    },
+    formatDate(date){
+    const splittedDate = date.split("-")  //ano mes dia
+       return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`
+    }
+}
+
+const Form = {
+
+
+    // pegando os dados html do form
+    description: document.querySelector('input#description'),
+    amount: document.querySelector('input#amount'),
+    date: document.querySelector('input#date'),
+
+    // pegando os valores do html
+    getValues(){
+        return {
+            description: Form.description.value,
+            amount: Form.amount.value,
+            date: Form.date.value
+        }
+    },
+
+    // verificar se todas as infos foram preenchidas
+    validateFields(){
+        const { description, amount, date } = Form.getValues()
+        
+        if(description.trim() === "" || amount.trim() === "" || date.trim() === ""){
+            throw new Error("Por favor, preencha todos os campos.")
+        }
+    },
+
+    // formatar os dados para salvar
+    formatValues(){
+        let { description, amount, date } = Form.getValues()
+        amount = Utils.formatValues(amount)
+        date = Utils.formatDate(date)
+
+        return {
+            description,
+            amount,
+            date
+        }
+    },
+
+    // apagar os dados do form
+    clearFields(){
+        Form.description.value = ""
+        Form.amount.value = ""
+        Form.date.value = ""
+    },
+
+
+    submit(event) {
+        event.preventDefault()
+
+        try {
+            Form.validateFields()                       // validar
+            const transaction = Form.formatValues()     // formatar
+            Transaction.add(transaction)                // salvar
+            Form.clearFields()                          // apagar dados form
+            Modal.close()                               // fechar modal
+        
+        } catch (error) {
+            alert(error.message)
+        }
     }
 }
 
@@ -130,12 +199,13 @@ const App = {
         DOM.clearTransactions()
         App.init()
     },
+
 }
 
 App.init()
 
-Transaction.add({
-    description: 'combustivel',
-    amount: 5000,
-    date: '20/10/2021'
-})
+// Transaction.add({
+//     description: 'combustivel',
+//     amount: 5000,
+//     date: '20/10/2021'
+// })
