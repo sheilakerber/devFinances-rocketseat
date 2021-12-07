@@ -9,24 +9,24 @@ const Modal = {
     }
 }
 
+// salvando os dados no localStorage
+const Storage = {
+    // localStorage.getItem('key')
+    get(){
+        return JSON.parse(localStorage.getItem('dev.finances:transactions')) || []
+    },
+
+    // localStorage.setItem("key", value)
+    set(transactions){
+        localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions) )
+    }
+}
+
 // funcionalidades a partir do obj Transaction
 const Transaction = {
     // array para guardar as transactions
-    all: [{
-            description: 'Luz',
-            amount: -15000,
-            date: '01/01/2021'
-        },
-        {
-            description: 'Aluguel',
-            amount: -120000,
-            date: '01/01/2021'
-        },{
-            description: 'Salário',
-            amount: 800000,
-            date: '09/01/2021'
-        }
-    ],
+    all: Storage.get(),
+
     add(transaction){
         Transaction.all.push(transaction)
         App.reload()
@@ -193,8 +193,9 @@ const App = {
         Transaction.all.forEach((transaction, index) => {
             DOM.addTransaction(transaction, index)
         })
-        
         DOM.updateTotal()
+
+        Storage.set(Transaction.all)
     },
     reload(){
         DOM.clearTransactions()
@@ -203,9 +204,3 @@ const App = {
 }
 
 App.init()
-
-// Transaction.add({
-//     description: 'combustivel',
-//     amount: 5000,
-//     date: '20/10/2021'
-// })k
